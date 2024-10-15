@@ -89,7 +89,7 @@
     * Frames per second.
     * @const
     */
-    var FPS = 60;
+    var FPS = 90;
     /** @const */
     var IS_HIDPI = window.devicePixelRatio > 1;
     /** @const */
@@ -104,23 +104,23 @@
     * @enum {number}
     */
     Runner.config = {
-    ACCELERATION: 0.001,
-    BG_CLOUD_SPEED: 0.2,
-    BOTTOM_PAD: 10,
-    CLEAR_TIME: 3000,
-    CLOUD_FREQUENCY: 0.5,
-    GAMEOVER_CLEAR_TIME: 750,
-    GAP_COEFFICIENT: 0.6,
-    GRAVITY: 0.6,
-    INITIAL_JUMP_VELOCITY: 12,
-    MAX_CLOUDS: 6,
-    MAX_OBSTACLE_LENGTH: 3,
-    MAX_SPEED: 12,
-    MIN_JUMP_HEIGHT: 35,
-    MOBILE_SPEED_COEFFICIENT: 1.2,
-    RESOURCE_TEMPLATE_ID: 'audio-resources',
-    SPEED: 6,
-    SPEED_DROP_COEFFICIENT: 3
+      ACCELERATION: 0.0003,        // Reduzimos a aceleração (antes: 0.001)
+  BG_CLOUD_SPEED: 0.2,
+  BOTTOM_PAD: 10,
+  CLEAR_TIME: 1000,            // Reduzimos o tempo de espera para limpar o cenário (antes: 3000)
+  CLOUD_FREQUENCY: 0.5,
+  GAMEOVER_CLEAR_TIME: 300,    // Reduzimos o tempo após game over (antes: 750)
+  GAP_COEFFICIENT: 1.5,  // Aumente o valor (antes era 0.6)
+  GRAVITY: 0.6,
+  INITIAL_JUMP_VELOCITY: 10,   // Ajustamos o pulo para ser um pouco menos rápido (antes: 12)
+  MAX_CLOUDS: 6,
+  MAX_OBSTACLE_LENGTH: 3,
+  MAX_SPEED: 6,                // Reduzimos a velocidade máxima (antes: 12)
+  MIN_JUMP_HEIGHT: 30,         // Tornamos o pulo um pouco menor (antes: 35)
+  MOBILE_SPEED_COEFFICIENT: 1.2,
+  RESOURCE_TEMPLATE_ID: 'audio-resources',
+  SPEED: 2,                    // Diminuímos a velocidade inicial ainda mais (antes: 3)
+  SPEED_DROP_COEFFICIENT: 3
     };
     /**
     * Default dimensions.

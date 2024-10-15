@@ -1,18 +1,28 @@
 let previousY = null;
-const thresholdJump = 10;   // Sensibilidade para pular
-const thresholdCrouch = 10; // Sensibilidade para agachar
+const thresholdJump = 20;   // Aumentei a sensibilidade para o pulo
+const thresholdCrouch = 20; // Aumentei a sensibilidade para o agachamento
+let cooldown = false;       // Cooldown para evitar múltiplas detecções rápidas
 
 async function setupCamera() {
   const video = document.getElementById('video');
-  const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+  const stream = await navigator.mediaDevices.getUserMedia({ 
+    video: { width: 320, height: 240 }  // Definindo uma resolução menor
+  });
   video.srcObject = stream;
   return new Promise((resolve) => {
     video.onloadedmetadata = () => resolve(video);
   });
 }
 
+
 async function detectPose() {
-  const net = await posenet.load();
+  const net = await posenet.load({
+    architecture: 'MobileNetV1',  // Um modelo mais leve
+    outputStride: 16,             // Valor mais baixo aumenta a velocidade
+    inputResolution: { width: 320, height: 240 },  // Resolução mais baixa para processar mais rápido
+    multiplier: 0.5               // Reduz a precisão para aumentar a velocidade
+  });
+
   const video = document.getElementById('video');
   const canvas = document.getElementById('output');
   const ctx = canvas.getContext('2d');
@@ -23,10 +33,12 @@ async function detectPose() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-    detectJumpOrCrouch(pose);
+    if (!cooldown) {
+      detectJumpOrCrouch(pose);
+    }
     drawPose(pose, ctx);
 
-    await tf.nextFrame();
+    await tf.nextFrame();  // Chama o próximo frame para processamento
   }
 }
 
@@ -48,17 +60,25 @@ function detectJumpOrCrouch(pose) {
   const rightHip = keypoints.find(point => point.part === 'rightHip');
   const avgHipY = (leftHip.position.y + rightHip.position.y) / 2;
 
-  if (previousY) {
+  if (previousY !== null) {
     const deltaY = previousY - avgHipY;
 
     if (deltaY > thresholdJump) {
       triggerJump();  // Simular pulo
+      activateCooldown();  // Prevenir múltiplas detecções
     } else if (deltaY < -thresholdCrouch) {
       triggerCrouch();  // Simular agachamento
+      activateCooldown();  // Prevenir múltiplas detecções
     }
   }
 
   previousY = avgHipY;
+}
+
+// Cooldown para evitar múltiplas detecções seguidas
+function activateCooldown() {
+  cooldown = true;
+  setTimeout(() => cooldown = false, 300);  // Reduzido de 1 segundo para 300ms
 }
 
 // Funções para simular o controle do Dino via teclas
