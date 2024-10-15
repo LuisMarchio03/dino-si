@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Body Movement Control for Dino Game</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Container para a câmera -->
+  <div class="camera-container">
+    <video id="video" width="640" height="480" autoplay></video>
+    <canvas id="output" width="640" height="480"></canvas>
+  </div>
+
+  <!-- Container para o jogo do Dino -->
+  <div class="game-container">
+    <iframe id="dinoGame" src="dino.html" title="Dino Game"></iframe>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet"></script>
+  <script src="script.js"></script> <!-- Script separado para detecção e integração -->
+</body>
+</html>
