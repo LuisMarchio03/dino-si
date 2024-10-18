@@ -24,14 +24,14 @@ To run this project, you'll need:
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/your-username/PoseControlledDinoGame.git
-    cd PoseControlledDinoGame
+    git clone https://github.com/LuisMarchio03/pose-controlled-dino-game.git
+    cd pose-controlled-dino-game
     ```
 
 2. Install the dependencies (if any):
 
     ```bash
-    npm install
+        Run on live server - vscode
     ```
 
 3. Start the project:
